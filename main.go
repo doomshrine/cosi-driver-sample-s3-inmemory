@@ -81,6 +81,7 @@ func runHealthcheck(ctx context.Context) error {
 
 func runOSP(ctx context.Context) error {
 	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 
 	res := resource.NewWithAttributes(
 		semconv.SchemaURL,
