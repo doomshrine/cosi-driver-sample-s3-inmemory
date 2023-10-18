@@ -3,5 +3,5 @@ kind: BucketClaim
 metadata:
   name: example-bm
 spec:
-  bucketClassName: example-bc
+  bucketClassName: dupa
   protocols: ["s3"]

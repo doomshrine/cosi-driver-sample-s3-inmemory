@@ -19,8 +19,8 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/go-logr/logr"
 	"github.com/johannesboyne/gofakes3"
-	"k8s.io/klog/v2"
 )
 
 // S3Fake is a fake S3 server.
@@ -28,11 +28,14 @@ type S3Fake struct {
 	Address string
 	Backend gofakes3.Backend
 	Users   *sync.Map
+
+	log logr.Logger
 }
 
 // NewS3Fake creates a new fake S3 server.
-func NewS3Fake(address string, backend gofakes3.Backend) *S3Fake {
+func NewS3Fake(log logr.Logger, address string, backend gofakes3.Backend) *S3Fake {
 	return &S3Fake{
+		log:     log,
 		Address: address,
 		Backend: backend,
 		Users:   &sync.Map{},
@@ -54,7 +57,7 @@ func (s *S3Fake) Run(ctx context.Context) error {
 		defer cancel()
 		err := srv.Shutdown(ctx)
 		if err != nil {
-			klog.V(3).ErrorS(err, "failed to shutdown server")
+			s.log.V(3).Error(err, "failed to shutdown server")
 		}
 	}()
 

@@ -53,8 +53,8 @@ spec:
               cpu: 100m
               memory: 1Gi
         - name: objectstorage-provisioner-sidecar
-          image: gcr.io/k8s-staging-sig-storage/objectstorage-sidecar/objectstorage-sidecar:v20230130-v0.1.0-24-gc0cf995
-          imagePullPolicy: IfNotPresent
+          image: docker.io/shanduur/cosi-provisioner-sidecar:latest
+          imagePullPolicy: Always
           args:
             - "-v=5"
           env:
